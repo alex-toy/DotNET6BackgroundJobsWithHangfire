@@ -1,4 +1,6 @@
-﻿using HangFireApp.Models;
+﻿using Hangfire;
+using HangFireApp.Models;
+using HangFireApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,6 +25,9 @@ namespace HangFireApp.Controllers
             if (ModelState.IsValid)
             {
                 Drivers.Add(driver);
+
+                var jobId = BackgroundJob.Enqueue<IServiceManagement>(x => x.SendMail());
+
                 return CreatedAtAction(nameof(AddDriver), driver);
             }
 
@@ -51,6 +56,8 @@ namespace HangFireApp.Controllers
             }
 
             driver.Status = 0;
+
+            RecurringJob.AddOrUpdate<IServiceManagement>(x => x.UpdateDatabase(), Cron.Minutely);
 
             return NoContent();
         }

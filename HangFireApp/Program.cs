@@ -1,6 +1,7 @@
 using Hangfire;
 using Hangfire.Storage.SQLite;
 using HangFireApp.Services;
+using HangfireBasicAuthenticationFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddHangfire(config => config
     .UseSQLiteStorage(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.AddHangfireServer();
 builder.Services.AddTransient<IServiceManagement, ServiceManagement>();
 
 var app = builder.Build();
@@ -34,7 +36,21 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseHangfireDashboard();
+app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+{
+    DashboardTitle = "Drivers dashboard",
+    Authorization = new []
+    {
+        new HangfireCustomBasicAuthenticationFilter()
+        {
+            Pass = "password",
+            User = "alex"
+        }
+    }
+});
+
 app.MapHangfireDashboard();
+
+RecurringJob.AddOrUpdate<IServiceManagement>(x => x.SyncData(), "0 * * ? * *");  
 
 app.Run();

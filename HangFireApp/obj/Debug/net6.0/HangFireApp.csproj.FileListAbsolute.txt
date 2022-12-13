@@ -67,3 +67,4 @@ C:\source\CsharpLibraries\DotNET6BackgroundJobsWithHangfire\HangFireApp\obj\Debu
 C:\source\CsharpLibraries\DotNET6BackgroundJobsWithHangfire\HangFireApp\obj\Debug\net6.0\HangFireApp.pdb
 C:\source\CsharpLibraries\DotNET6BackgroundJobsWithHangfire\HangFireApp\obj\Debug\net6.0\HangFireApp.genruntimeconfig.cache
 C:\source\CsharpLibraries\DotNET6BackgroundJobsWithHangfire\HangFireApp\obj\Debug\net6.0\ref\HangFireApp.dll
+C:\source\CsharpLibraries\DotNET6BackgroundJobsWithHangfire\HangFireApp\bin\Debug\net6.0\HangfireBasicAuthenticationFilter.dll
