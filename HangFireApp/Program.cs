@@ -1,5 +1,6 @@
 using Hangfire;
 using Hangfire.Storage.SQLite;
+using HangFireApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddHangfire(config => config
     .UseRecommendedSerializerSettings()
     .UseSQLiteStorage(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddTransient<IServiceManagement, ServiceManagement>();
 
 var app = builder.Build();
 
